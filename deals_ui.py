@@ -12,7 +12,7 @@ def toggle_form():
 def randint():
      return random.randint(0,sys.maxsize)
 
-plat_table_name = 'general.plat_tcsnl_deals'
+plat_table_name = 'general.silver_tcsnl_deals'
 
 
 if 'show_form' not in st.session_state:
