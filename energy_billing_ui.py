@@ -28,10 +28,10 @@ if len(uploaded_files) != 0:
 			st.warning('kWh_Factuur kolom niet aanwezig in Excel!')
 			validated = False
 
-jaar = df_factuur['jaar'].iloc[0]
-maand = df_factuur['maand'].iloc[0]
 if validated and len(uploaded_files) == 2:
 	butt = st.button('Upload bestanden!')
+	jaar = df_factuur['jaar'].iloc[0]
+	maand = df_factuur['maand'].iloc[0]
 
 	if butt:
 
