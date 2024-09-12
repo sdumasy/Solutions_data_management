@@ -13,23 +13,39 @@ def get_databricks_access_token():
 
 	payload = {
 		'grant_type': 'client_credentials',
-		'scope': 'sql'
+		'scope': 'all-apis'
 	}
+	print('hi')
 
 	response = requests.post(token_url, auth=(client_id, client_secret), data=payload).json()
 	return response['access_token']
 
+def send_put_request_with_retry(url, data, headers, max_retries=10):
+
+	attempt = 0
+	while attempt < max_retries:
+
+		response = requests.put(url, data = data, headers = headers)
+		print(response.text)
+		print(response.status_code)
+		
+		if response.status_code == 204:
+			return 'ok'
+		else:
+			attempt += 1
+			time.sleep(1) 
+
+	raise Exception('failed')
 
 def send_request_with_retry(url, data, headers, max_retries=10):
 
 	attempt = 0
 	while attempt < max_retries:
+
 		response = requests.post(url, json = data, headers = headers)
 		
 		if response.status_code == 200:
 			response_json = response.json()
-
-
 
 			if 'status' in response_json and response_json['status']['state'] == 'FAILED':
 				attempt += 1
