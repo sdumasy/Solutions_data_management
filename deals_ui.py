@@ -30,7 +30,7 @@ print(query)
 result = dbx.exec_sql_get_request(query, st.session_state.refresh_int)
 
 header_names = [x['name'] for x in result['manifest']['schema']['columns']]
-
+print(result['result']['data_array'])
 df_pd = pd.DataFrame(result['result']['data_array'], columns=header_names)
 
 

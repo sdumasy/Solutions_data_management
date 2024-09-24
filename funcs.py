@@ -46,7 +46,7 @@ def check_conditions_and_merge(
 		st.warning('Invalid product, did you select a month/quarter/year?')
 		return
 
-	deal_value = quantity_mw * price
+	deal_value = quantity_mwh * price
 
 	insert_query = f"""
 		MERGE INTO {silver_table_name} AS target
