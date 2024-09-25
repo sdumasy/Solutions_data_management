@@ -9,7 +9,7 @@ from dateutil.relativedelta import relativedelta
 from io import BytesIO
 import uuid
 
-uploaded_files = st.file_uploader('Upload twee Edmij factuur bestanden!', accept_multiple_files = True)
+uploaded_files = st.file_uploader('Upload twee Edmij factuur bestanden!!', accept_multiple_files = True)
 
 df_factuur = None
 validated = True
@@ -17,15 +17,16 @@ validated = True
 def have_same_elements(list1, list2):
     return set(list1) == set(list2)
 
+
 if len(uploaded_files) != 0:
 	print(uploaded_files)
 	for item in uploaded_files:
 
 		if df_factuur is None:
 
-			df_factuur = pd.read_excel(item)
+			df_factuur = pd.read_excel(item, dtype={'EanCode': str})
 		else:
-			df_new = pd.read_excel(item)
+			df_new = pd.read_excel(item, dtype={'EanCode': str})
 			df_factuur = pd.concat([df_factuur, df_new])
 
 		if 'kWh_Factuur' not in df_factuur:
@@ -39,7 +40,7 @@ if validated and len(uploaded_files) == 2:
 	df_factuur = df_factuur.loc[:, ~df_factuur.columns.str.contains('^Unnamed')]
 	df_factuur.columns = df_factuur.columns.str.replace(' ', '', regex=False).str.replace('.', '', regex=False)
 	# df_factuur['EanCode'] = df_factuur['EanCode'].astype('float').astype('string')
-	df_factuur['EanCode'] = df_factuur['EanCode'].apply(lambda x: f"{int(x)}" if pd.notnull(x) else "")
+	# df_factuur['EanCode'] = df_factuur['EanCode'].apply(lambda x: f"{int(x)}" if pd.notnull(x) else "")
 	df_factuur.reset_index(drop=True, inplace=True)
 	df_factuur
 	print(df_factuur.dtypes)
