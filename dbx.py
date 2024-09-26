@@ -26,8 +26,6 @@ def send_put_request_with_retry(url, data, headers, max_retries=10):
 	while attempt < max_retries:
 
 		response = requests.put(url, data = data, headers = headers)
-		print(response.text)
-		print(response.status_code)
 		
 		if response.status_code == 204:
 			return 'ok'
